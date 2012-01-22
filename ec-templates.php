@@ -75,6 +75,7 @@ class ec_templates {
                 'title', 'editor', 'thumbnail',
             ),
         ));
+        wp_enqueue_script('jquery');
     }
     
     static function action_add_meta_boxes(){
