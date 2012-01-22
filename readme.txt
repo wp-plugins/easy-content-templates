@@ -4,7 +4,7 @@ Donate link: http://japaalekhin.llemos.com/easy-content-templates
 Tags: content templates, writing, posts, templates
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 0.9
+Stable tag: 1.0
 
 This plugin lets you define content templates to quickly apply to new posts or pages.
 
