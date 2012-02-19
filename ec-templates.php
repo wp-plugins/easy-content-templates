@@ -3,7 +3,7 @@
 Plugin Name: Easy Content Templates
 Plugin URI: http://japaalekhin.llemos.com/easy-content-templates
 Description: This plugin lets you define content templates to quickly apply to new posts or pages.
-Version: 1.0
+Version: 1.1 beta
 Author: Japa Alekhin Llemos
 Author URI: http://japaalekhin.llemos.com/
 License: GPL2
@@ -27,6 +27,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 class ec_templates {
 
 // Internals *******************************************************************
+    
+    const post_meta_key_public = 'ect-template-is-public';
 
 // Essentials ******************************************************************
     
@@ -35,15 +37,15 @@ class ec_templates {
         return $wpdb->get_var("SELECT `id` FROM `" . $wpdb->posts . "` WHERE `id` = '" . intval($id) . "' AND `post_type` = 'ec-template'") != null;
     }
     
-    static function get_contents($id){
+    static function get_template($id){
         if(!self::exists($id)) return array('success' => false, 'message' => 'Template does not exist!');
         $template = get_post($id);
         return array(
             'success' => true,
             'message' => 'Template loaded!',
-            'title' => apply_filters('the_title', $template->post_title),
-            'content' => apply_filters('the_content', $template->post_content),
-            'excerpt' => apply_filters('the_excerpt', $template->post_excerpt),
+            'title' => $template->post_title,
+            'content' => $template->post_content,
+            'excerpt' => $template->post_excerpt,
         );
     }
 
@@ -81,27 +83,57 @@ class ec_templates {
     static function action_add_meta_boxes(){
         $post_types = get_post_types(array(), 'objects');
         foreach($post_types as $post_type){
-            if($post_type->show_ui && 'ec-template' != $post_type->name){
-                add_meta_box('mtb_ec_templates', 'Easy Content Template', array('ec_templates', 'action_metabox_render'), $post_type->name, 'side', 'high');
+            if($post_type->show_ui){
+                if($post_type->name == 'ec-template'){
+                    add_meta_box('mtb_ec_templates', 'Easy Content Template', array('ec_templates', 'action_metabox_render_template'), $post_type->name, 'side', 'high');
+                }else{
+                    add_meta_box('mtb_ec_templates', 'Easy Content Template', array('ec_templates', 'action_metabox_render_allothers'), $post_type->name, 'side', 'high');
+                }
             }
         }
     }
     
-    static function action_metabox_render(){
+    static function action_save_post($post_id, $post = null){
+        if(defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+        if(null != $post && 'ec-template' != $post->post_type) return;
+        if('page' == $_POST['post_type'])
+            if(!current_user_can('edit_page', $post_id)) return;
+        else
+            if(!current_user_can('edit_post', $post_id)) return;
+
+        // OK, we're authenticated: we need to find and save the data
+        update_post_meta($post_id, self::post_meta_key_public, isset($_POST['ect_make_public']) && $_POST['ect_make_public'] == 1);
+    }
+    
+    static function action_metabox_render_template(){
         ob_start();
-        include plugin_dir_path(__FILE__) . 'ec-templates-metabox.php';
+        include plugin_dir_path(__FILE__) . 'ect-metabox-template.php';
         echo ob_get_clean();
     }
     
-    static function action_ajax_ect_get_contents(){
+    static function action_metabox_render_allothers(){
+        ob_start();
+        include plugin_dir_path(__FILE__) . 'ect-metabox-allothers.php';
+        echo ob_get_clean();
+    }
+    
+    static function action_ajax_ect_get_template(){
         header('Cache-Control: no-cache, must-revalidate');
         header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
         header('Content-type: application/json');
-        echo json_encode(self::get_contents(isset($_POST['template_id']) ? intval($_POST['template_id']) : 0));
+        echo json_encode(self::get_template(isset($_POST['template_id']) ? intval($_POST['template_id']) : 0));
         exit;
     }
 
 // Filters *********************************************************************
+
+    static function filter_posts_where($where){
+        if(is_admin()){
+            global $typenow;
+            if($typenow == 'ec-template') $where .= " AND `post_author` = '" . get_current_user_id() . "'";
+        }
+        return $where;
+    }
 
 // Template Tags ***************************************************************
 
@@ -111,7 +143,8 @@ class ec_templates {
 
 add_action('init',                              array('ec_templates',   'action_init'),                 1000);
 add_action('add_meta_boxes',                    array('ec_templates',   'action_add_meta_boxes'),       1000);
-add_action('wp_ajax_nopriv_ect_get_contents',   array('ec_templates',   'action_ajax_ect_get_contents'));
-add_action('wp_ajax_ect_get_contents',          array('ec_templates',   'action_ajax_ect_get_contents'));
-
+add_action('save_post',                         array('ec_templates',   'action_save_post'));
+add_action('wp_ajax_nopriv_ect_get_template',   array('ec_templates',   'action_ajax_ect_get_template'));
+add_action('wp_ajax_ect_get_template',          array('ec_templates',   'action_ajax_ect_get_template'));
+add_filter('posts_where',                       array('ec_templates',   'filter_posts_where'));
 ?>
