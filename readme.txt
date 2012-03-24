@@ -1,6 +1,6 @@
 === Easy Content Templates ===
 Contributors: japaalekhinllemos
-Donate link: http://japaalekhin.llemos.com/easy-content-templates
+Donate link: http://japaalekhin.llemos.com/easy-content-templates-wordpress-plugin#donate
 Tags: content templates, writing, posts, templates
 Requires at least: 3.0
 Tested up to: 3.3.1
@@ -16,8 +16,12 @@ Easy Content Templates is a plugin for WordPress that lets you define content te
 
 Special Thanks:
 
-* Jonathan Le - for pointing out some bugs and suggesting a fix
+* Jonathan Le - for pointing out bugs and suggesting fixes
 * [WebNuggetz.com](http://www.webnuggetz.com/) - for helping me shape the plugin to be more usable and for pointing out a possible issue
+
+Did you find this plugin useful?
+
+You can show your thanks by making a [donation through PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=F5WLGRPHFZBUQ&lc=PH&item_name=Japa%20Alekhin%27s%20Easy%20Content%20Templates%20Plugin&no_note=0&cn=Any%20requests%3f%20Let%20me%20know&no_shipping=1&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted) – it would indirectly speed up the development of new features by helping take care of the other stuff I have to put time and effort to. It would also inspire, encourage and motivate me knowing that there are people wanting this kind of functionality for WordPress.
 
 == Installation ==
 
@@ -28,6 +32,10 @@ Just install like you normally do with a plugin.
 1. Done
 
 == Frequently Asked Questions ==
+
+= How do i create templates? =
+
+In your WordPress admin, usually under the *Comments* section, there will be a *Templates* section (much like *Posts* and *Pages*). Hover over it and click *Add New*.
 
 = How do i insert them into my posts or pages? =
 
@@ -44,9 +52,18 @@ Sure you can! ;) Templates are actually Custom Post Types so you can make a lot 
 == Screenshots ==
 
 1. Step 1. Template Definition - You need to add templates first before you can use them.
-2. Step 2. Template Usage - When creating (or editing) a post or page, there's an "Easy Content Template" box to the upper right. Select the template you want to load from the drop-down box and click "Load Template".
+2. Step 2. Select a Template - When creating (or editing) a post or page, there's an "Easy Content Template" box to the upper right. Click the drop-down box to select the Template you want to load from the list. Click *Load Template*.
+2. Step 3. Template Usage - After the Template finishes loading, you can now build upon the template by editing the post or page and filling in values.
 
 == Changelog ==
+
+= 1.2 =
+* fixed a sorting problem in the drop-down box
+* added a message if you click Load Template and no Template is selected
+* updated the icon for Templates post type
+* updated the F.A.Q. section
+* updated screenshots so it shows the updated plugin
+* updated text from "make this template public" to "share this template"
 
 = 1.1 =
 * changed the way the plugin fetches the ajax url to fix some issues
@@ -66,6 +83,9 @@ Sure you can! ;) Templates are actually Custom Post Types so you can make a lot 
 * creation
 
 == Upgrade Notice ==
+
+= 1.2 =
+Minor bug fixed, icons updated and fully tested.
 
 = 1.1 =
 New features, safe update!

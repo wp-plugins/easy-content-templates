@@ -1,8 +1,8 @@
 <?php
-$templates_own = get_posts(array('author' => get_current_user_id(), 'numberposts' => -1, 'post_type' => 'ec-template', 'post_status' => 'publish', 'order_by' => 'title', 'order' => 'ASC',));
+$templates_own = get_posts(array('author' => get_current_user_id(), 'numberposts' => -1, 'post_type' => 'ec-template', 'post_status' => 'publish', 'orderby' => 'title', 'order' => 'ASC',));
 $exclusions = array();
 foreach($templates_own as $template_own) $exclusions[] = $template_own->ID;
-$templates_public = get_posts(array('exclude' => $exclusions, 'meta_key' => ec_templates::post_meta_key_public, 'meta_value' => 1, 'numberposts' => -1, 'post_type' => 'ec-template', 'post_status' => 'publish', 'order_by' => 'title', 'order' => 'ASC',));
+$templates_public = get_posts(array('exclude' => $exclusions, 'meta_key' => ec_templates::post_meta_key_public, 'meta_value' => 1, 'numberposts' => -1, 'post_type' => 'ec-template', 'post_status' => 'publish', 'orderby' => 'title', 'order' => 'ASC',));
 if(empty($templates_own) && empty($templates_public)):
 ?>
     You haven't defined any templates yet.
@@ -15,7 +15,7 @@ else:
 <?php
     if(!empty($templates_own)):
 ?>
-        <optgroup label="Your Templates">
+        <optgroup label="Your templates">
 <?php
         foreach($templates_own as $template):
 ?>
@@ -28,7 +28,7 @@ else:
     endif;
     if(!empty($templates_public)):
 ?>
-        <optgroup label="Shared Templates">
+        <optgroup label="Templates shared with">
 <?php
         foreach($templates_public as $template):
 ?>
@@ -59,7 +59,9 @@ else:
             $('#btn_ect_mtb_load').click(function(event){
                 event.preventDefault();
                 var template_id = $('#ddl_ect_mtb_template_id').val();
-                if(template_id > 0){
+                if(template_id == 0){
+                    alert('Please select the template you want to load!');
+                }else{
                     $.ajax({
                         'data': {
                             'action': 'ect_get_template',
