@@ -3,7 +3,7 @@
 Plugin Name: Easy Content Templates
 Plugin URI: http://japaalekhin.llemos.com/easy-content-templates
 Description: This plugin lets you define content templates to quickly apply to new posts or pages.
-Version: 1.2
+Version: 1.2.1
 Author: Japa Alekhin Llemos
 Author URI: http://japaalekhin.llemos.com/
 License: GPL2
@@ -134,6 +134,15 @@ class ec_templates {
 
 // Filters *********************************************************************
 
+    static function filter_posts_orderby($orderby){
+        if(is_admin()){
+            global $wpdb;
+            global $typenow;
+            return "`" . $wpdb->posts . "`.`post_title` ASC";
+        }
+        return $orderby;
+    }
+    
     static function filter_posts_where($where){
         if(is_admin()){
             global $typenow;
@@ -156,4 +165,5 @@ add_action('save_post',                         array('ec_templates',   'action_
 add_action('wp_ajax_nopriv_ect_get_template',   array('ec_templates',   'action_ajax_ect_get_template'));
 add_action('wp_ajax_ect_get_template',          array('ec_templates',   'action_ajax_ect_get_template'));
 add_filter('posts_where',                       array('ec_templates',   'filter_posts_where'));
+add_filter('posts_orderby',                     array('ec_templates',   'filter_posts_orderby'));
 ?>

@@ -72,11 +72,17 @@ else:
                         'global': false,
                         'success': function(data){
                             if(data.success == 1){
-                                switchEditors.go('content', 'html');
+                                // load title
                                 if($('#chk_ect_load_title:checked').length > 0) $('#title').val(unescape(data.title)).focus().blur();
+
+                                // load content
+                                var visual_mode = !(typeof(tinyMCE) != 'undefined' && (tinyMCE.activeEditor == null || tinyMCE.activeEditor.isHidden() != false));
+                                switchEditors.go('content', 'html');
                                 if($('#chk_ect_load_content:checked').length > 0) $('#content').val(unescape(data.content));
+                                if(visual_mode) switchEditors.go('content', 'tinymce');
+
+                                // load excerpt
                                 if($('#chk_ect_load_excerpt:checked').length > 0) $('#excerpt').val(unescape(data.excerpt));
-                                switchEditors.go('content', 'tinymce');
                             }else{
                                 alert(data.message);
                             }
