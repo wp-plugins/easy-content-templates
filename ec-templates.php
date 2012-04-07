@@ -133,6 +133,14 @@ class ec_templates {
     }
 
 // Filters *********************************************************************
+    
+    static function filter_posts_where($where){
+        if(is_admin()){
+            global $typenow;
+            if($typenow == 'ec-template') $where .= " AND `post_author` = '" . get_current_user_id() . "'";
+        }
+        return $where;
+    }
 
     static function filter_posts_orderby($orderby){
         if(is_admin()){
@@ -143,14 +151,6 @@ class ec_templates {
             }
         }
         return $orderby;
-    }
-    
-    static function filter_posts_where($where){
-        if(is_admin()){
-            global $typenow;
-            if($typenow == 'ec-template') $where .= " AND `post_author` = '" . get_current_user_id() . "'";
-        }
-        return $where;
     }
 
 // Template Tags ***************************************************************
@@ -166,6 +166,6 @@ add_action('add_meta_boxes',                    array('ec_templates',   'action_
 add_action('save_post',                         array('ec_templates',   'action_save_post'));
 add_action('wp_ajax_nopriv_ect_get_template',   array('ec_templates',   'action_ajax_ect_get_template'));
 add_action('wp_ajax_ect_get_template',          array('ec_templates',   'action_ajax_ect_get_template'));
-add_filter('posts_where',                       array('ec_templates',   'filter_posts_where'));
 add_filter('posts_orderby',                     array('ec_templates',   'filter_posts_orderby'));
+add_filter('posts_where',                       array('ec_templates',   'filter_posts_where'));
 ?>

@@ -16,8 +16,9 @@ Easy Content Templates is a plugin for WordPress that lets you define content te
 
 Special Thanks:
 
-* Jonathan Le - for pointing out bugs and suggesting fixes
+* Jonathan Le - for pointing out serious bugs and suggesting their fixes
 * [WebNuggetz.com](http://www.webnuggetz.com/) - for helping me shape the plugin to be more usable and for pointing out a possible issue
+* Cheryl Free - for suggesting an enhancement and for pointing out a bug in a released version before everyone else downloaded copies
 
 Did you find this plugin useful?
 
