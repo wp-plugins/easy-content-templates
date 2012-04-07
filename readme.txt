@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=F5WLG
 Tags: content templates, writing, posts, templates
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 
 This plugin lets you define content templates to quickly apply to new posts or pages.
 
@@ -57,6 +57,9 @@ Sure you can! ;) Templates are actually Custom Post Types so you can make a lot 
 
 == Changelog ==
 
+= 1.2.2 =
+* added a fix to the bug in 1.2.1, if you upgraded to 1.2.1 you SHOULD get this
+
 = 1.2.1 =
 * sorted the templates in the Templates admin section
 * added a visual editor detection feature to disable switching back to visual view if the user was originally in html view
@@ -87,6 +90,9 @@ Sure you can! ;) Templates are actually Custom Post Types so you can make a lot 
 * creation
 
 == Upgrade Notice ==
+
+= 1.2.2 =
+CRITICAL BUG FIXED! If you upgraded to 1.2.1, you SHOULD get this!
 
 = 1.2.1 =
 Some bug fixed, please refer to the change log.
