@@ -50,11 +50,11 @@ First you need to define your templates, go to the *Templates* section of your W
 
 Sure you can! ;) Templates are actually Custom Post Types so you can make a lot of templates.
 
-= What does the "Share this Template with others." check box do?
+= What does the "Share this Template with others." check box do? =
 
 If you define a template and check that box, it means that you are allowing users to use your template. That is, they will be able to create posts or pages using that template. This does not mean that they will see your template in the administration area or they will be able to edit it.
 
-= When i create a post from a template, how do i show the post date?
+= When i create a post from a template, how do i show the post date? =
 
 Just use the [postdate] shortcode, it will display the date the post was published. You can control the output format by using the format parameter like this: [postdate format="M j, Y"]
 Format options are similar with [PHP's date function](http://php.net/manual/en/function.date.php).
