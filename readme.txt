@@ -3,8 +3,8 @@ Contributors: japaalekhinllemos
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=F5WLGRPHFZBUQ&lc=PH&item_name=Japa%20Alekhin%27s%20Easy%20Content%20Templates%20Plugin&no_note=0&cn=Any%20requests%3f%20Let%20me%20know&no_shipping=1&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: content templates, writing, posts, templates
 Requires at least: 3.0
-Tested up to: 3.3.1
-Stable tag: 1.2.2
+Tested up to: 3.4.2
+Stable tag: 1.3
 
 This plugin lets you define content templates to quickly apply to new posts or pages.
 
@@ -17,7 +17,7 @@ Easy Content Templates is a plugin for WordPress that lets you define content te
 Special Thanks:
 
 * Jonathan Le - for pointing out serious bugs and suggesting their fixes
-* [WebNuggetz.com](http://www.webnuggetz.com/) - for helping me shape the plugin to be more usable and for pointing out a possible issue
+* WebNuggetz.com - for helping me shape the plugin to be more usable and for pointing out a possible issue
 * Cheryl Free - for suggesting an enhancement and for pointing out a bug in a released version before everyone else downloaded copies
 
 Did you find this plugin useful?
@@ -50,6 +50,15 @@ First you need to define your templates, go to the *Templates* section of your W
 
 Sure you can! ;) Templates are actually Custom Post Types so you can make a lot of templates.
 
+= What does the "Share this Template with others." check box do?
+
+If you define a template and check that box, it means that you are allowing users to use your template. That is, they will be able to create posts or pages using that template. This does not mean that they will see your template in the administration area or they will be able to edit it.
+
+= When i create a post from a template, how do i show the post date?
+
+Just use the [postdate] shortcode, it will display the date the post was published. You can control the output format by using the format parameter like this: [postdate format="M j, Y"]
+Format options are similar with [PHP's date function](http://php.net/manual/en/function.date.php).
+
 == Screenshots ==
 
 1. Step 1. Template Definition - You need to add templates first before you can use them.
@@ -57,6 +66,12 @@ Sure you can! ;) Templates are actually Custom Post Types so you can make a lot 
 2. Step 3. Template Usage - After the Template finishes loading, you can now build upon the template by editing the post or page and filling in values.
 
 == Changelog ==
+
+= 1.3 =
+* added the long awaited timeout fix
+* added a disable while loading feature for the load template button
+* added the [postdate] shortcode (with formatting options) feature (also applies to titles)
+* cleaned up the code a little bit (you won't see this as it's under the hood)
 
 = 1.2.2 =
 * added a fix to the bug in 1.2.1, if you upgraded to 1.2.1 you SHOULD get this
@@ -91,6 +106,9 @@ Sure you can! ;) Templates are actually Custom Post Types so you can make a lot 
 * creation
 
 == Upgrade Notice ==
+
+= 1.3 =
+New features, a bug fix and donation button.
 
 = 1.2.2 =
 CRITICAL BUG FIXED! If you upgraded to 1.2.1, you SHOULD get this!

@@ -1,44 +1,52 @@
 <?php
+
 /*
-Plugin Name: Easy Content Templates
-Plugin URI: http://japaalekhin.llemos.com/easy-content-templates
-Description: This plugin lets you define content templates to quickly apply to new posts or pages.
-Version: 1.2.2
-Author: Japa Alekhin Llemos
-Author URI: http://japaalekhin.llemos.com/
-License: GPL2
+  Plugin Name: Easy Content Templates
+  Plugin URI: http://japaalekhin.llemos.com/easy-content-templates
+  Description: This plugin lets you define content templates to quickly apply to new posts or pages.
+  Version: 1.3
+  Author: Japa Alekhin Llemos
+  Author URI: http://japaalekhin.llemos.com/
+  License: GPL2
 
-Copyright 2011  Japa Alekhin Llemos  (email : japaalekhin@llemos.com)
+  Copyright 2011  Japa Alekhin Llemos  (email : japaalekhin@llemos.com)
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License, version 2, as 
-published by the Free Software Foundation.
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License, version 2, as
+  published by the Free Software Foundation.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 class ec_templates {
-
 // Internals *******************************************************************
-    
+
     const post_meta_key_public = 'ect-template-is-public';
 
 // Essentials ******************************************************************
-    
-    static function exists($id){
-        global $wpdb;
-        return $wpdb->get_var("SELECT `id` FROM `" . $wpdb->posts . "` WHERE `id` = '" . intval($id) . "' AND `post_type` = 'ec-template'") != null;
+
+    static function exists($id) {
+        $check_post = get_post($id);
+        if ($check_post == null) {
+            return false;
+        }
+        if (!isset($check_post->post_type) || (isset($check_post->post_type) && $check_post->post_type != 'ec-template')) {
+            return false;
+        }
+        return true;
     }
-    
-    static function get_template($id){
-        if(!self::exists($id)) return array('success' => false, 'message' => 'Template does not exist!');
+
+    static function get_template($id) {
+        if (!self::exists($id)) {
+            return array('success' => false, 'message' => 'Template does not exist!');
+        }
         $template = get_post($id);
         return array(
             'success' => true,
@@ -51,7 +59,7 @@ class ec_templates {
 
 // Actions *********************************************************************
 
-    static function action_init(){
+    static function action_init() {
         register_post_type('ec-template', array(
             'label' => 'Template',
             'labels' => array(
@@ -68,63 +76,73 @@ class ec_templates {
                 'not_found_in_trash' => 'No templates found in trash',
                 'menu_name' => 'Templates',
             ),
-            'description' => 'AWM Shop - Products',
+            'description' => 'Enables the use of Templates',
             'publicly_queryable' => true,
             'exclude_from_search' => true,
             'show_ui' => true,
             'show_in_menu' => true,
             'supports' => array(
-                'title', 'editor', 'thumbnail',
+                'title', 'editor',
             ),
         ));
     }
-    
-    static function action_admin_print_scripts(){
+
+    static function action_admin_print_scripts() {
         wp_enqueue_script('jquery');
     }
-    
-    static function action_admin_print_styles(){
+
+    static function action_admin_print_styles() {
         wp_enqueue_style('easy-content-template', plugin_dir_url(__FILE__) . 'easy-content-templates.css');
     }
-    
-    static function action_add_meta_boxes(){
+
+    static function action_add_meta_boxes() {
         $post_types = get_post_types(array(), 'objects');
-        foreach($post_types as $post_type){
-            if($post_type->show_ui){
-                if($post_type->name == 'ec-template'){
-                    add_meta_box('mtb_ec_templates', 'Easy Content Template', array('ec_templates', 'action_metabox_render_template'), $post_type->name, 'side', 'high');
-                }else{
+        foreach ($post_types as $post_type) {
+            if ($post_type->show_ui) {
+                if ($post_type->name == 'ec-template') {
+                    add_meta_box('mtb_ec_templates', 'Template Options', array('ec_templates', 'action_metabox_render_template'), $post_type->name, 'side', 'high');
+                    add_meta_box('mtb_ec_templates_donate', 'Donations', array('ec_templates', 'action_metabox_render_donations'), $post_type->name, 'side', 'low');
+                } else {
                     add_meta_box('mtb_ec_templates', 'Easy Content Template', array('ec_templates', 'action_metabox_render_allothers'), $post_type->name, 'side', 'high');
                 }
             }
         }
     }
-    
-    static function action_save_post($post_id, $post = null){
-        if(defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
-        if(null != $post && 'ec-template' != $post->post_type) return;
-        if('page' == $_POST['post_type'])
-            if(!current_user_can('edit_page', $post_id)) return;
-        else
-            if(!current_user_can('edit_post', $post_id)) return;
+
+    static function action_save_post($post_id, $post = null) {
+        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+            return;
+        }
+        if (null != $post && 'ec-template' != $post->post_type) {
+            return;
+        }
+        if (!current_user_can('edit_post', $post_id)) {
+            return;
+        }
 
         // OK, we're authenticated: we need to find and save the data
         update_post_meta($post_id, self::post_meta_key_public, isset($_POST['ect_make_public']) && $_POST['ect_make_public'] == 1);
     }
-    
-    static function action_metabox_render_template(){
+
+    static function action_metabox_render_template() {
         ob_start();
         include plugin_dir_path(__FILE__) . 'ect-metabox-template.php';
         echo ob_get_clean();
     }
-    
-    static function action_metabox_render_allothers(){
+
+    static function action_metabox_render_donations() {
+        ob_start();
+        include plugin_dir_path(__FILE__) . 'ect-metabox-donations.php';
+        echo ob_get_clean();
+    }
+
+    static function action_metabox_render_allothers() {
         ob_start();
         include plugin_dir_path(__FILE__) . 'ect-metabox-allothers.php';
         echo ob_get_clean();
     }
-    
-    static function action_ajax_ect_get_template(){
+
+    static function action_ajax_ect_get_template() {
         header('Cache-Control: no-cache, must-revalidate');
         header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
         header('Content-type: application/json');
@@ -133,19 +151,21 @@ class ec_templates {
     }
 
 // Filters *********************************************************************
-    
-    static function filter_posts_where($where){
-        if(is_admin()){
+
+    static function filter_posts_where($where) {
+        if (is_admin()) {
             global $typenow;
-            if($typenow == 'ec-template') $where .= " AND `post_author` = '" . get_current_user_id() . "'";
+            if ($typenow == 'ec-template') {
+                $where .= " AND `post_author` = '" . get_current_user_id() . "'";
+            }
         }
         return $where;
     }
 
-    static function filter_posts_orderby($orderby){
-        if(is_admin()){
+    static function filter_posts_orderby($orderby) {
+        if (is_admin()) {
             global $typenow;
-            if($typenow == 'ec-template'){
+            if ($typenow == 'ec-template') {
                 global $wpdb;
                 return "`" . $wpdb->posts . "`.`post_title` ASC";
             }
@@ -154,18 +174,25 @@ class ec_templates {
     }
 
 // Template Tags ***************************************************************
-
 // Shortcodes ******************************************************************
+
+    static function shortcode_postdate($attributes) {
+        extract(shortcode_atts(array('format' => 'M j, Y',), $attributes));
+        global $post;
+        return date($format, strtotime($post->post_date));
+    }
 
 }
 
-add_action('init',                              array('ec_templates',   'action_init'),                 1000);
-add_action('admin_print_scripts',               array('ec_templates',   'action_admin_print_scripts'));
-add_action('admin_print_styles',                array('ec_templates',   'action_admin_print_styles'));
-add_action('add_meta_boxes',                    array('ec_templates',   'action_add_meta_boxes'),       1000);
-add_action('save_post',                         array('ec_templates',   'action_save_post'));
-add_action('wp_ajax_nopriv_ect_get_template',   array('ec_templates',   'action_ajax_ect_get_template'));
-add_action('wp_ajax_ect_get_template',          array('ec_templates',   'action_ajax_ect_get_template'));
-add_filter('posts_orderby',                     array('ec_templates',   'filter_posts_orderby'));
-add_filter('posts_where',                       array('ec_templates',   'filter_posts_where'));
+add_action('init', array('ec_templates', 'action_init'), 1000);
+add_action('admin_print_scripts', array('ec_templates', 'action_admin_print_scripts'));
+add_action('admin_print_styles', array('ec_templates', 'action_admin_print_styles'));
+add_action('add_meta_boxes', array('ec_templates', 'action_add_meta_boxes'), 1000);
+add_action('save_post', array('ec_templates', 'action_save_post'));
+add_action('wp_ajax_nopriv_ect_get_template', array('ec_templates', 'action_ajax_ect_get_template'));
+add_action('wp_ajax_ect_get_template', array('ec_templates', 'action_ajax_ect_get_template'));
+add_filter('posts_orderby', array('ec_templates', 'filter_posts_orderby'));
+add_filter('posts_where', array('ec_templates', 'filter_posts_where'));
+add_filter('the_title', 'do_shortcode');
+add_shortcode('postdate', array('ec_templates', 'shortcode_postdate'));
 ?>
