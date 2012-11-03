@@ -4,7 +4,7 @@
   Plugin Name: Easy Content Templates
   Plugin URI: http://japaalekhin.llemos.com/easy-content-templates
   Description: This plugin lets you define content templates to quickly apply to new posts or pages.
-  Version: 1.3
+  Version: 1.3.1
   Author: Japa Alekhin Llemos
   Author URI: http://japaalekhin.llemos.com/
   License: GPL2
@@ -150,6 +150,16 @@ class ec_templates {
         exit;
     }
 
+    static function action_manage_posts_custom_column($column_name) {
+        global $post;
+        switch ($column_name) {
+            case 'template_owner':
+                $user = get_user_by('id', $post->post_author);
+                echo $user->display_name;
+                break;
+        }
+    }
+
 // Filters *********************************************************************
 
     static function filter_posts_where($where) {
@@ -172,6 +182,14 @@ class ec_templates {
         }
         return $orderby;
     }
+    
+    static function filter_manage_ec_template_posts_columns($columns){
+        unset($columns['date']);
+        if(current_user_can('edit_others_pages')){
+            $columns['template_owner'] = 'Template Owner';
+        }
+        return $columns;
+    }
 
 // Template Tags ***************************************************************
 // Shortcodes ******************************************************************
@@ -191,8 +209,10 @@ add_action('add_meta_boxes', array('ec_templates', 'action_add_meta_boxes'), 100
 add_action('save_post', array('ec_templates', 'action_save_post'));
 add_action('wp_ajax_nopriv_ect_get_template', array('ec_templates', 'action_ajax_ect_get_template'));
 add_action('wp_ajax_ect_get_template', array('ec_templates', 'action_ajax_ect_get_template'));
+add_action('manage_posts_custom_column', array('ec_templates', 'action_manage_posts_custom_column'));
 add_filter('posts_orderby', array('ec_templates', 'filter_posts_orderby'));
-add_filter('posts_where', array('ec_templates', 'filter_posts_where'));
+//add_filter('posts_where', array('ec_templates', 'filter_posts_where'));
+add_filter('manage_ec-template_posts_columns', array('ec_templates', 'filter_manage_ec_template_posts_columns'));
 add_filter('the_title', 'do_shortcode');
 add_shortcode('postdate', array('ec_templates', 'shortcode_postdate'));
 ?>

@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=F5WLG
 Tags: content templates, writing, posts, templates
 Requires at least: 3.0
 Tested up to: 3.4.2
-Stable tag: 1.3
+Stable tag: 1.3.1
 
 This plugin lets you define content templates to quickly apply to new posts or pages.
 
@@ -29,8 +29,8 @@ You can show your thanks by making a [donation through PayPal](https://www.paypa
 Just install like you normally do with a plugin.
 
 1. Upload `easy-content-templates` to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Done
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Done
 
 == Frequently Asked Questions ==
 
@@ -66,6 +66,9 @@ Format options are similar with [PHP's date function](http://php.net/manual/en/f
 2. Step 3. Template Usage - After the Template finishes loading, you can now build upon the template by editing the post or page and filling in values.
 
 == Changelog ==
+
+= 1.3.1 =
+* remove the limit on admins when viewing templates - they can now see all templates created by other authors
 
 = 1.3 =
 * added the long awaited timeout fix
@@ -106,6 +109,9 @@ Format options are similar with [PHP's date function](http://php.net/manual/en/f
 * creation
 
 == Upgrade Notice ==
+
+= 1.3.1 =
+Very minor upgrade, you can ignore unless your administrators need to see all templates
 
 = 1.3 =
 New features, a bug fix and donation button.
