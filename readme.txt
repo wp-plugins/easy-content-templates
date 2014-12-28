@@ -1,9 +1,9 @@
 === Easy Content Templates ===
 Contributors: japaalekhinllemos
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=F5WLGRPHFZBUQ&lc=PH&item_name=Japa%20Alekhin%27s%20Easy%20Content%20Templates%20Plugin&no_note=0&cn=Any%20requests%3f%20Let%20me%20know&no_shipping=1&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
+Donate link: http://wpsolutions.llemos.com/easy-content-templates-wordpress-plugin#donate
 Tags: content templates, writing, posts, templates
-Requires at least: 3.0
-Tested up to: 3.4.2
+Requires at least: 4.0
+Tested up to: 4.1
 Stable tag: 1.3.1
 
 This plugin lets you define content templates to quickly apply to new posts or pages.
@@ -12,17 +12,13 @@ This plugin lets you define content templates to quickly apply to new posts or p
 
 Easy Content Templates is a plugin for WordPress that lets you define content templates to quickly apply to new or existings posts and pages. By default, templates are private to the author/creator only. Templates can be shared to other users by checking the "Make this Template available for others" checkbox. Other users can't edit your template, they can only use it.
 
-[Visit plugin site &raquo;](http://japaalekhin.llemos.com/easy-content-templates-wordpress-plugin "Easy Content Templates WordPress Plugin by Japa Alekhin")
+[Visit plugin site &raquo;](http://wpsolutions.llemos.com/easy-content-templates-wordpress-plugin "Easy Content Templates WordPress Plugin by WP Solutions")
 
 Special Thanks:
 
 * Jonathan Le - for pointing out serious bugs and suggesting their fixes
-* WebNuggetz.com - for helping me shape the plugin to be more usable and for pointing out a possible issue
+* WebNuggetz.com - for helping shape the plugin to be more usable and for pointing out a possible issue
 * Cheryl Free - for suggesting an enhancement and for pointing out a bug in a released version before everyone else downloaded copies
-
-Did you find this plugin useful?
-
-You can show your thanks by making a [donation through PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=F5WLGRPHFZBUQ&lc=PH&item_name=Japa%20Alekhin%27s%20Easy%20Content%20Templates%20Plugin&no_note=0&cn=Any%20requests%3f%20Let%20me%20know&no_shipping=1&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted) – it would indirectly speed up the development of new features by helping take care of the other stuff I have to put time and effort to. It would also inspire, encourage and motivate me knowing that there are people wanting this kind of functionality for WordPress.
 
 == Installation ==
 
@@ -34,30 +30,25 @@ Just install like you normally do with a plugin.
 
 == Frequently Asked Questions ==
 
-= How do i create templates? =
+= How do I create templates? =
 
 In your WordPress admin, usually under the *Comments* section, there will be a *Templates* section (much like *Posts* and *Pages*). Hover over it and click *Add New*.
 
-= How do i insert them into my posts or pages? =
+= How do I insert them into my posts or pages? =
 
 In your write screen look to the upper right and there's a box there. Select a template from the drop-down and click "Load Template".
 
-= Nothing shows up in the drop-down list, what do i do? =
+= Nothing shows up in the drop-down list, what do I do? =
 
 First you need to define your templates, go to the *Templates* section of your WordPress admin and create your templates there.
 
-= Can i define multiple templates? =
+= Can I define multiple templates? =
 
 Sure you can! ;) Templates are actually Custom Post Types so you can make a lot of templates.
 
 = What does the "Share this Template with others." check box do? =
 
 If you define a template and check that box, it means that you are allowing users to use your template. That is, they will be able to create posts or pages using that template. This does not mean that they will see your template in the administration area or they will be able to edit it.
-
-= When i create a post from a template, how do i show the post date? =
-
-Just use the [postdate] shortcode, it will display the date the post was published. You can control the output format by using the format parameter like this: [postdate format="M j, Y"]
-Format options are similar with [PHP's date function](http://php.net/manual/en/function.date.php).
 
 == Screenshots ==
 
@@ -66,6 +57,15 @@ Format options are similar with [PHP's date function](http://php.net/manual/en/f
 2. Step 3. Template Usage - After the Template finishes loading, you can now build upon the template by editing the post or page and filling in values.
 
 == Changelog ==
+
+= 1.4 =
+* REWRITE: the plugin was rewritten from the ground up to accommodate additional features
+* REMOVED: shortcode processing on title
+* REMOVED: the date shortcode functionality (to be replaced by a better mechanism)
+* FIXED: the excerpt part is now working
+* CHANGED: templates are no longer shared to others by default (check it manually if you want to share)
+* ADDED: default loading options for parts of templates
+
 
 = 1.3.1 =
 * remove the limit on admins when viewing templates - they can now see all templates created by other authors
