@@ -150,20 +150,39 @@ class ect_template {
     }
 
     static function ac_save_post($post_id){
-        if (defined("DOING_AUTOSAVE") && DOING_AUTOSAVE) {
+        // return if doing autosave
+        if(defined("DOING_AUTOSAVE") && DOING_AUTOSAVE){
             return;
         }
+        
+        // return if template doesn't exist
         $current_post = get_post($post_id);
         if($current_post == null){
             return;
         }
+
+        // return if this is just a revision
+        if(wp_is_post_revision($post_id)){
+            return;
+        }
+        
+        // return if not a template
         if($current_post->post_type != "ec-template"){
             return;
         }
+        
+        // return if this is a NEW template
+        if($current_post->post_status == "auto-draft"){
+            return;
+        }
+        
+        // return if no permission to edit a template
         if (!current_user_can("edit_post", $post_id)) {
             return;
         }
 
+        // and save
+        echo "<pre>" . print_r("THIS SHIT RAN!", true) . "</pre>";
         update_post_meta($post_id, self::pmk_shared, isset($_POST['ect_share']) && $_POST['ect_share'] == 1 ? 1 : 0);
         update_post_meta($post_id, self::pmk_load_title, isset($_POST['ect_load_title']) && $_POST['ect_load_title'] == 1 ? 1 : 0);
         update_post_meta($post_id, self::pmk_load_content, isset($_POST['ect_load_content']) && $_POST['ect_load_content'] == 1 ? 1 : 0);

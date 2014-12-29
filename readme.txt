@@ -4,21 +4,16 @@ Donate link: http://wpsolutions.llemos.com/easy-content-templates-wordpress-plug
 Tags: content templates, writing, posts, templates
 Requires at least: 4.0
 Tested up to: 4.1
-Stable tag: 1.4
+Stable tag: 1.4.1
 
-This plugin lets you define content templates to quickly apply to new posts or pages.
+This plugin lets you define content templates to quickly and easily create new posts or pages.
 
 == Description ==
 
 Easy Content Templates is a plugin for WordPress that lets you define content templates to quickly apply to new or existings posts and pages. By default, templates are private to the author/creator only. Templates can be shared to other users by checking the "Make this Template available for others" checkbox. Other users can't edit your template, they can only use it.
 
 [Visit plugin site &raquo;](http://wpsolutions.llemos.com/easy-content-templates-wordpress-plugin "Easy Content Templates WordPress Plugin by WP Solutions")
-
-Special Thanks:
-
-* Jonathan Le - for pointing out serious bugs and suggesting their fixes
-* WebNuggetz.com - for helping shape the plugin to be more usable and for pointing out a possible issue
-* Cheryl Free - for suggesting an enhancement and for pointing out a bug in a released version before everyone else downloaded copies
+[Support development &raquo;](http://wpsolutions.llemos.com/easy-content-templates-wordpress-plugin#donate "Support the development of Easy Content Templates")
 
 == Installation ==
 
@@ -58,7 +53,12 @@ If you define a template and check that box, it means that you are allowing user
 
 == Changelog ==
 
-= 1.4 =
+= 1.4.1 =
+* UPDATED: descriptions, versions, and links
+* UPDATED: screenshots
+* FIXED: default loading options, now defaults to checked as it should be
+
+= 1.4.0 =
 * REWRITE: the plugin was rewritten from the ground up to accommodate additional features
 * REMOVED: shortcode processing on title
 * REMOVED: the date shortcode functionality (to be replaced by a better mechanism)
