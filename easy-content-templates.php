@@ -4,7 +4,7 @@
   Plugin Name: Easy Content Templates
   Plugin URI: http://wpsolutions.llemos.com/easy-content-templates-wordpress-plugin
   Description: This plugin lets you define content templates to quickly and easily create new posts or pages.
-  Version: 1.4.1
+  Version: 1.4.2
   Author: Japa Alekhin Llemos
   Author URI: http://japaalekhin.llemos.com
   License: GPL2

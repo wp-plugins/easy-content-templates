@@ -53,6 +53,9 @@ If you define a template and check that box, it means that you are allowing user
 
 == Changelog ==
 
+= 1.4.2 =
+* FIXED: undefined error in line 234
+
 = 1.4.1 =
 * UPDATED: descriptions, versions, and links
 * UPDATED: screenshots
