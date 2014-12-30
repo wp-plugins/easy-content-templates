@@ -231,9 +231,11 @@ class ect_template {
     }
 
     static function fl_pre_get_posts($query){
-        if($query->query["post_type"] == "ec-template"){
-            $query->set("orderby", "menu_order");
-            $query->set("order", "ASC");
+        if(isset($query->query["post_type"])){
+            if($query->query["post_type"] == "ec-template"){
+                $query->set("orderby", "menu_order");
+                $query->set("order", "ASC");
+            }
         }
     }
     
