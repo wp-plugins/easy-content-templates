@@ -73,7 +73,7 @@
                     $("#content").val(unescape(data.data.content));
                     switchEditors.go("content", "tinymce");
                 }else{
-                    $("#content").val(unescape(data.content));
+                    $("#content").val(unescape(data.data.content));
                 }
             }
 
