@@ -53,6 +53,9 @@ If you define a template and check that box, it means that you are allowing user
 
 == Changelog ==
 
+= 1.4.3.1 =
+* FIXED: debugging info error printed when saving posts
+
 = 1.4.3 =
 * FIXED: undefined when loading content in HTML/Text view
 

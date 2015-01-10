@@ -182,7 +182,6 @@ class ect_template {
         }
 
         // and save
-        echo "<pre>" . print_r("THIS SHIT RAN!", true) . "</pre>";
         update_post_meta($post_id, self::pmk_shared, isset($_POST['ect_share']) && $_POST['ect_share'] == 1 ? 1 : 0);
         update_post_meta($post_id, self::pmk_load_title, isset($_POST['ect_load_title']) && $_POST['ect_load_title'] == 1 ? 1 : 0);
         update_post_meta($post_id, self::pmk_load_content, isset($_POST['ect_load_content']) && $_POST['ect_load_content'] == 1 ? 1 : 0);
